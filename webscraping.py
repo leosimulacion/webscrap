@@ -36,9 +36,7 @@ for word in re.findall('\w+', text):
 counts =  Counter(re.findall('\w+', text))
 print(counts)
 
-
-counts =  Counter(re.findall('\w+', text))
-#print(counts.most_common()[0])
+print(counts.most_common()[0])
 
 
 
