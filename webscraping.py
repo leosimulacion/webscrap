@@ -1,12 +1,13 @@
-from turtle import title
+
 from bs4 import BeautifulSoup
 import requests
+from collections import defaultdict
+from collections import Counter
+import re
 
-# -*- coding: latin-1 -*-
-
-web = 'https://www.elimparcial.com/sonora/sonora/Rinde-hoy-su-primer-informe-de-trabajo-Alfonso-Durazo-20221013-0002.html'
+web = 'https://www.elimparcial.com/dinero/Riqueza-de-litio-en-Ucrania-Un-impulsor-para-la-invasion-rusa-20221023-0073.html '
 result = requests.get(web)
-content = result.text.encode('latin-1')
+content = result.text
 
 soup = BeautifulSoup(content, 'lxml')
 
@@ -16,8 +17,28 @@ title = soup.find('h1').get_text()
 
 transcript = soup.find('div', class_='newsfull__body').get_text()
 
-#print(title)
-#print(transcript)
-
 with open('imparcial.txt', 'w') as file:
     file.write(title + transcript)
+
+file_path='./imparcial.txt'
+
+with open(file_path) as file:
+    text = file.read()
+
+#print(len(re.findall(r'\w+', text)))
+
+counts = defaultdict(int)
+for word in re.findall('\w+', text):
+    counts[word] += 1
+
+#print(counts)
+
+counts =  Counter(re.findall('\w+', text))
+print(counts)
+
+
+counts =  Counter(re.findall('\w+', text))
+#print(counts.most_common()[0])
+
+
+
